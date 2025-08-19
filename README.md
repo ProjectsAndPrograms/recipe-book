@@ -66,7 +66,7 @@ cooking fun and collaborative.
 ## 🚀 Installation
 
 1.  Clone the repository: git clone
-    https://github.com/your-username/recipe-book.git cd recipe-book
+    https://github.com/ProjectsAndPrograms/recipe-book.git cd recipe-book
 
 2.  Configure the database:
 
