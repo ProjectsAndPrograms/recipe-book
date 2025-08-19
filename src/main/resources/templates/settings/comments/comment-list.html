@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/settings/partials/header :: header}"></th:block>
+
+<div class="content users-list px-0 px-sm-4">
+	<th:block th:replace="~{/fragments/alert :: alert}"></th:block>
+	
+	<h3>Recipe Comments</h3>
+	<hr class="mt-0 mb-3">
+
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Recipe <i class="ti-angle-double-left text-dark mx-1 fs-6"></i> User</th>
+					<th>User Name</th>
+					<th>Recipe Title</th>
+					<th>Comment</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="comment, iterStat : ${comments}">
+					<th th:text="${firstItemIndex + iterStat.index + 1}"></th>
+					<td>
+						<div class="d-flex align-items-center">
+							<div class="image-box">
+								<img th:src="${comment.recipe != null && comment.recipe.primaryImage != null 
+                    					? comment.recipe.primaryImage : '/images/default-recipe.png'}" alt="recipe-image">
+							</div>
+							<i class="ti-angle-double-left text-success mx-2"></i>
+							<div class="image-box">
+								<img th:src="${comment.user != null && comment.user.image != null 
+                    					? comment.user.image : '/images/default-user.png'}" alt="user-image">
+							</div>
+						</div>
+					</td>
+					<td>
+						<a class="post-title" th:href="${comment.user != null && comment.user.username != null 
+                					? '/u/' + comment.user.username : '#'}">
+							<i th:text="${comment.user != null && comment.user.username != null 
+                						? '@' + comment.user.username : '@Unknown'}"></i>
+						</a>
+						<br>
+					</td>
+					<td>
+						<a class="post-title" th:href="${comment.recipe != null && comment.recipe.id != null 
+						                ? '/recipes/' + comment.recipe.id : '#'}" th:text="${comment.recipe != null && comment.recipe.title != null 
+						                ? @stringUtil.truncate(comment.recipe.title, 20) : 'No Title'}">
+							Recipe Title
+						</a>
+					</td>
+					<td>
+						<span th:text="${comment.message != null 
+            ? @stringUtil.truncate(comment.message, 20) : ''}"></span>
+					</td>
+					<td>
+						<div class="action-btns">
+							<button class="more openCommentInfoModal" th:data-comment-id="${comment.id}">
+								<i class="ti-info-alt"></i>
+							</button>
+							<!--/*
+							<button class="share"><i class="ti-comments"></i></button>
+							*/-->
+							<form th:action="@{/admin/settings/comments/{id} (id=${comment.id})}" method="post" th:method="DELETE" >
+								<button class="delete" type="submit"><i class="ti-trash"></i></button>
+							</form>
+						</div>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<th:block th:replace="~{/layouts/pagination :: pagination}"></th:block>
+
+</div>
+
+<th:block th:replace="~{/settings/comments/comment-info-modal :: comment-info-modal}"></th:block>
+
+<script th:src="@{/js/pages/comment-list.js}"></script>
+<th:block th:replace="~{/settings/partials/footer :: footer}"></th:block>

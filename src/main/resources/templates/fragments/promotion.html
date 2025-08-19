@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="promotion">
+		<!-- Promotion -->
+		<div class="promotion">
+			<img th:src="@{/images/promotion.jpg}" class="img-fluid w-100">
+			<div class="promotion-content">
+				<h5 class="text-white mb-3">Create Your Stories!!</h5>
+				<p class="text-white mb-4">"Experimenting with flavors and finding my inner chef. It's a
+					delicious journey, one dish at a time."</p>
+				<a th:href="${isAuthenticated ? '/recipes/create' : '/login'}" class="btn btn-primary">Get
+					Started</a>
+			</div>
+		</div>
+	</th:block>
+
+</body>
+
+</html>

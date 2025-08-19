@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="replies_list(replies)">
+    
+    <th:block th:if="${!#lists.isEmpty(replies)}"
+              th:each="reply : ${replies}">
+        <th:block th:replace="~{/recipes/partials/reply-comment :: reply_comment(${reply})}"></th:block>
+    </th:block>
+
+</th:block>
+</body>
+</html>

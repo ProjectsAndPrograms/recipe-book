@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="sidebar">
+		<div class="sidebar">
+			<h5 class="section-devider">Home</h5>
+			<ul>
+				<li><a th:href="@{/settings/profile}"> <i class="ti-user" style="font-weight: bold;"></i> Public Profile
+					</a>
+				</li>
+				<li><a th:href="@{/settings/account}"> <i class="ti-settings"></i>Account</a></li>
+				<li><a th:href="@{/settings/analysis}"><i class="ti-bar-chart"></i>Analysis</a></li>
+				<li><a th:href="@{/settings/my-recipes}"><i class="ti-bookmark-alt"></i>My Recipes</a></li>
+
+
+				<li>
+					<form th:action="@{/logout}" method="post">
+						<button type="submit">Log Out</button>
+					</form>
+				</li>
+			</ul>
+			<th:block th:if="${authUser.role == 'admin'}">
+				<hr class="seperator" />
+
+				<h5 class="section-devider">Admin Stuff</h5>
+				<ul>
+					<li><a th:href="@{/admin/settings/users}"> <i class="ti-user" style="font-weight: bold;"></i>Users
+						</a>
+					</li>
+					<li><a th:href="@{/admin/settings/recipes}"> <i class="ti-settings"></i>Recipes</a></li>
+					<li><a th:href="@{/admin/settings/comments}"><i class="ti-bar-chart"></i>Comments</a></li>
+					<li>
+						<a class="has-submenu" data-bs-toggle="collapse" href="#submenu" role="button"
+							aria-expanded="false" aria-controls="submenu">
+							<i class="ti-infinite"></i>
+							Controls
+						</a>
+						<ul class="collapse submenu" id="submenu">
+							<li><a href="#">About Content</a></li>
+							<li><a href="#">Contact Settings</a></li>
+							<li><a href="#">Application Settings</a></li>
+							<li><a href="#">Hero Section</a></li>
+
+						</ul>
+					</li>
+				</ul>
+			</th:block>
+		</div>
+	</th:block>
+</body>
+
+</html>

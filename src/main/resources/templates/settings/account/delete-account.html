@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="delete_account">
+		<div class="mb-4">
+			<h3 class="text-danger mt-4">Delete Account</h3>
+			<hr class="mt-0 mb-3">
+			<p class="text-muted small mb-3">
+				This action is <strong>permanent</strong> and cannot be undone. Make sure you're absolutely certain
+				before
+				deleting your account.
+			</p>
+			<button type="button" data-bs-toggle="modal" data-bs-target="#deleteAccountModal"
+				class="btn btn-sm btn-outline-danger rounded">Delete your account</button>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModal"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content shadow-lg">
+					<div class="modal-header">
+						<h5 class="modal-title text-danger fw-bold">Delete Account</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+
+					<form th:action="@{/settings/account/delete}" method="post" th:method="DELETE">
+						<div class="modal-body">
+							<p class="text-muted">
+								This action is <strong>permanent</strong>. All your data will be lost and cannot be
+								recovered.
+							</p>
+
+							<div class="form-group mt-3">
+								<label for="keytext" class="form-label">
+									<i>To confirm, type exactly:</i>
+									<span class="fw-bold text-danger no-copy-badge"
+										th:text="${'Delete ' + authUser.username}">Delete me</span>
+								</label>
+								<input type="text" id="keytext" name="keytext" class="form-control"
+									placeholder="Type confirmation text here..." required />
+							</div>
+						</div>
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+								Cancel
+							</button>
+							<button id="deleteUser" type="submit" class="btn btn-danger" disabled>
+								DELETE ACCOUNT
+							</button>
+						</div>
+
+					</form>
+				</div>
+			</div>
+		</div>
+
+
+	</th:block>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="alert">
+		<!-- Success Message -->
+		<div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+			<span th:text="${success}"></span>
+		</div>
+
+		<!-- Error Message -->
+		<div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+			<strong>Error:</strong> <span th:text="${error}"></span>
+			</div>
+
+		<!-- Warning Message -->
+		<div th:if="${warning}" class="alert alert-warning alert-dismissible fade show" role="alert">
+			<strong>Warning:</strong> <span th:text="${warning}"></span>
+		</div>
+
+		<!-- Info Message -->
+		<div th:if="${info}" class="alert alert-info alert-dismissible fade show" role="alert">
+			<strong>Note:</strong> <span th:text="${info}"></span>
+		</div>
+	</th:block>
+	
+</body>
+
+</html>

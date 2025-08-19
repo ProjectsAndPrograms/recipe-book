@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="comment-info-modal">
+		<div class="modal fade comment-info-modal" id="commentInfoModal" tabindex="-1" aria-labelledby="commentInfoModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title">Comment Info</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+					<div class="modal-body mb-2">
+						<div id="commentSection"></div>			
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+
+</body>
+
+</html>

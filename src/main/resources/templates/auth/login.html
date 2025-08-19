@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layouts/auth-layout :: header}"></th:block>
+
+<body>
+	<div class="login_form">
+		<a class="home-button" th:href="@{/}">
+			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path fill="#fff" d="M4 19v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-3q-.425 0-.712-.288T14 20v-5q0-.425-.288-.712T13 14h-2q-.425 0-.712.288T10 15v5q0 .425-.288.713T9 21H6q-.825 0-1.412-.587T4 19"/></svg>
+		</a>
+		
+		<form th:action="@{/login}" method="post">
+			<h3>Login</h3>
+			<!--/*	
+			<th:block th:replace="~{/auth/social-media-login-btns :: social_media_login_btns}"></th:block>
+			*/-->
+
+			<div th:if="${success}" class="alert alert-success">
+			    <span th:text="${success}"></span>
+			</div>
+			
+			<div th:if="${param.error}">
+				<div class="alert alert-danger alert-dismissible fade show" role="alert">
+					<strong>Error:</strong> Invalid username or password!
+				</div>
+			</div>
+			<div th:if="${param.logout}">
+				<div class="alert alert-success alert-dismissible fade show" role="alert">
+					Logout successfully!
+				</div>
+			</div>
+			<!-- Email input box -->
+			<div class="input_box">
+				<label for="username">Username or Email</label>
+				<input type="text" name="username" id="username" value="admin@gmail.com" placeholder="Enter your username or email" required />
+			</div>
+			<!-- Paswwrod input box -->
+			<div class="input_box">
+				<div class="password_title">
+					<label for="password">Password</label>
+					<a th:href="@{/forgot-password}">Forgot Password?</a>
+				</div>
+				<input type="password" name="password" id="password" value="123" placeholder="Enter your password" required />
+			</div>
+			<!-- Login button -->
+			<button type="submit">Log In</button>
+			<p class="sign_up">Don't have an account? <a th:href="@{/register}">Sign up</a></p>
+		</form>
+
+
+	</div>
+
+	<th:block th:replace="~{/layouts/auth-layout :: footer}"></th:block>
+</body>
+
+</html>

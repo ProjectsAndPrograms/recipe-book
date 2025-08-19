@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="pagination">
+		<div class="text-center mt-4" th:if="${totalPages > 1 and currentPageNo <= totalPages}">
+			<nav class="position-relative z-5">
+				<ul class="pagination justify-content-center">
+
+					<!-- Previous Button -->
+					<li class="page-item" th:classappend="${currentPageDisplay == 1} ? 'disabled'">
+						<a class="page-link"
+							th:href="${baseUrlWithoutPage} + (${#strings.contains(baseUrlWithoutPage, '?')} ? '&' : '?') + 'page=' + (${currentPageDisplay - 1})">
+							&Leftarrow;
+						</a>
+					</li>
+
+					<!-- First Page and Leading Ellipsis -->
+					<li class="page-item" th:if="${startPage > 1}">
+						<a class="page-link"
+							th:href="${baseUrlWithoutPage} + (${#strings.contains(baseUrlWithoutPage, '?')} ? '&' : '?') + 'page=1'">1</a>
+					</li>
+					<li class="page-item disabled" th:if="${startPage > 2}">
+						<span class="page-link">...</span>
+					</li>
+
+					<!-- Page Window -->
+					<li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"
+						th:classappend="${i == currentPageDisplay} ? 'active'">
+						<a class="page-link"
+							th:href="${baseUrlWithoutPage} + (${#strings.contains(baseUrlWithoutPage, '?')} ? '&' : '?') + 'page=' + ${i}"
+							th:text="${i}">1</a>
+					</li>
+
+					<!-- Trailing Ellipsis and Last Page -->
+					<li class="page-item disabled" th:if="${endPage < totalPages - 1}">
+						<span class="page-link">...</span>
+					</li>
+
+					<li class="page-item" th:if="${endPage < totalPages}">
+						<a class="page-link"
+							th:href="${baseUrlWithoutPage} + (${#strings.contains(baseUrlWithoutPage, '?')} ? '&' : '?') + 'page=' + ${totalPages}"
+							th:text="${totalPages}">30</a>
+					</li>
+
+					<!-- Next Button -->
+					<li class="page-item" th:classappend="${currentPageDisplay == totalPages} ? 'disabled'">
+						<a class="page-link"
+							th:href="${baseUrlWithoutPage} + (${#strings.contains(baseUrlWithoutPage, '?')} ? '&' : '?') + 'page=' + (${currentPageDisplay + 1})">
+							&Rightarrow;
+						</a>
+					</li>
+
+				</ul>
+			</nav>
+		</div>
+	</th:block>
+</body>
+
+</html>

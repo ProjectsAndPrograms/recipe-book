@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="header">
+
+		<head>
+			<meta charset="utf-8">
+			<title>Recipe Book</title>
+
+			<!-- mobile responsive meta -->
+			<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+			<meta name="description" content="Recipe book for hobby sheffs">
+			<meta name="author" content="Oranbyte">
+			
+			<th:block th:if="${_csrf != null}">
+			    <meta name="_csrf" th:content="${_csrf.token}" />
+			    <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+			</th:block>
+
+			<!-- theme meta -->
+			<meta name="theme-name" content="recipe-book" />
+
+			<!-- plugins -->
+			<link rel="stylesheet" th:href="@{/plugins/bootstrap/bootstrap.min.css}">
+			<link rel="stylesheet" th:href="@{/plugins/themify-icons/themify-icons.css}">
+			<link rel="stylesheet" th:href="@{/plugins/slick/slick.css}">
+			<link rel="stylesheet" th:href="@{/plugins/summernote/summernote-lite.min.css}">
+			<link rel="stylesheet" th:href="@{/plugins/toastify/toastify.css}">
+
+			<!-- Main Stylesheet -->
+			<link rel="stylesheet" th:href="@{/css/style.css}" media="screen">
+
+			<!--Favicon-->
+			<link rel="shortcut icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+			<link rel="icon" th:href="@{/images/favicon.png}" type="image/x-icon">
+			<script th:src="@{/plugins/toastify/toastify.js}"></script>
+			
+			<script th:src="@{/plugins/apex-charts/apexchart.js}"></script>
+		</head>
+
+		<body>
+
+
+			<th:block th:replace="~{/layouts/navbar :: navbar}"></th:block>
+	</th:block>
+</body>
+
+</html>

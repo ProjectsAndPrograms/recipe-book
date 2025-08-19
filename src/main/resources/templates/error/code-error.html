@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title th:text="${errorCode + ' ' + errorMessage}">ERROR</title>
+</head>
+<th:block th:replace="~{/layouts/header :: header}"></th:block>
+
+<section class="error-section">
+
+	<div class="error-container">
+		<div class="four_zero_four_bg">
+			<h1 th:text="${errorCode}">Error</h1>
+		</div>
+		<div class="contant_box_404">
+			<h3 th:text="${errorMessage}">Oops! something went wrong!!</h3>
+			<p>Looks like you’ve wandered off the green path
+				<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 48 48">
+					<g fill="none" stroke-width="3">
+						<path fill="#57d87c"
+							d="M45.455 34.47c-.215 2.294-2.066 4.021-4.366 4.138c-3.526.18-9.347.392-17.09.392c-7.975 0-13.911-.226-17.4-.408c-2.152-.112-3.918-1.645-4.165-3.785C2.208 32.848 2 30.104 2 26.636v-8.655C2 14.679 4.661 12 7.963 12c7.299-.003 19.73.04 28.197.321c.884.03 1.758.242 2.496.729c3.488 2.3 5.806 6.115 6.797 7.993c.382.725.549 1.54.542 2.359a132 132 0 0 1-.54 11.068" />
+						<path fill="#caffd6"
+							d="M40.038 22.526c-.93-1.728-2.52-4.11-4.702-5.347A1.45 1.45 0 0 0 34.62 17A1.62 1.62 0 0 0 33 18.62v4.377c0 .927.638 1.728 1.558 1.842c1.06.13 2.562.235 4.202.093c1.2-.103 1.849-1.345 1.278-2.405ZM28 25H2V14c0-2.986.103-5.277.224-6.945c.155-2.123 1.809-3.706 3.934-3.83C8.166 3.107 11.075 3 15 3s6.834.107 8.842.225c2.125.124 3.779 1.707 3.934 3.83C27.897 8.723 28 11.014 28 14zm1 14.5a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0m-21 0a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0" />
+						<path fill="#57d87c"
+							d="M2.026 11.445c.24 2 2.077 3.555 4.307 3.555c2.393 0 4.333-1.79 4.333-4c0 2.21 1.94 4 4.334 4s4.333-1.79 4.333-4c0 2.21 1.94 4 4.334 4c2.23 0 4.066-1.555 4.306-3.555a86 86 0 0 0-.198-4.39c-.154-2.123-1.808-3.706-3.933-3.83C21.833 3.107 18.924 3 15 3s-6.834.107-8.842.225c-2.125.124-3.779 1.707-3.934 3.83a86 86 0 0 0-.198 4.39" />
+						<path stroke="#1f9b42" stroke-linecap="round" stroke-linejoin="round"
+							d="M27.986 12.133c2.911.046 5.71.108 8.175.19c.883.029 1.757.241 2.495.728c3.488 2.3 5.806 6.116 6.797 7.993c.383.725.549 1.54.542 2.36c-.04 4.677-.297 8.47-.54 11.067c-.215 2.293-2.065 4.02-4.365 4.137q-.54.028-1.153.056m-10.912.305a407 407 0 0 1-10.05 0m-10.912-.305l-1.465-.072c-2.151-.112-3.917-1.645-4.164-3.785C2.208 32.848 2 30.104 2 26.636V25" />
+						<path stroke="#1f9b42" stroke-linecap="round" stroke-linejoin="round"
+							d="M40.038 22.526c-.93-1.728-2.52-4.11-4.702-5.347A1.45 1.45 0 0 0 34.62 17A1.62 1.62 0 0 0 33 18.62v4.377c0 .927.638 1.728 1.558 1.842c1.06.13 2.562.235 4.202.093c1.2-.103 1.849-1.345 1.278-2.405ZM28 25H2V14c0-2.986.103-5.277.224-6.945c.155-2.123 1.809-3.706 3.934-3.83C8.166 3.107 11.075 3 15 3s6.834.107 8.842.225c2.125.124 3.779 1.707 3.934 3.83C27.897 8.723 28 11.014 28 14zm1 14.5a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0m-21 0a5.5 5.5 0 1 0 11 0a5.5 5.5 0 0 0-11 0" />
+						<path stroke="#1f9b42" stroke-linecap="round" stroke-linejoin="round"
+							d="M2 11c0 2.21 1.94 4 4.333 4s4.334-1.79 4.334-4c0 2.21 1.94 4 4.333 4s4.333-1.79 4.333-4c0 2.21 1.94 4 4.334 4S28 13.21 28 11m-17.333 0V3.5m8.667 7.5V3.5" />
+					</g>
+				</svg>
+			</p>
+			<a th:href="@{/}" class="go_back_to_home">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+					<path fill="currentColor"
+						d="M4 19v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-3q-.425 0-.712-.288T14 20v-5q0-.425-.288-.712T13 14h-2q-.425 0-.712.288T10 15v5q0 .425-.288.713T9 21H6q-.825 0-1.412-.587T4 19"
+						stroke-width="0.5" stroke="currentColor" />
+				</svg>
+				<span> Back to Home</span>
+			</a>
+		</div>
+	</div>
+
+
+	<svg class="header-shape-1" width="39" height="40" viewBox="0 0 39 40" fill="none"
+		xmlns="http://www.w3.org/2000/svg">
+		<path d="M0.965848 20.6397L0.943848 38.3906L18.6947 38.4126L18.7167 20.6617L0.965848 20.6397Z" stroke="#040306"
+			stroke-miterlimit="10" />
+		<path class="path" d="M10.4966 11.1283L10.4746 28.8792L28.2255 28.9012L28.2475 11.1503L10.4966 11.1283Z" />
+		<path d="M20.0078 1.62949L19.9858 19.3804L37.7367 19.4024L37.7587 1.65149L20.0078 1.62949Z" stroke="#040306"
+			stroke-miterlimit="10" />
+	</svg>
+
+
+	<svg class="header-shape-2" width="39" height="39" viewBox="0 0 39 39" fill="none"
+		xmlns="http://www.w3.org/2000/svg">
+		<g filter="url(#filter0_d)">
+			<path class="path"
+				d="M24.1587 21.5623C30.02 21.3764 34.6209 16.4742 34.435 10.6128C34.2491 4.75147 29.3468 0.1506 23.4855 0.336498C17.6241 0.522396 13.0233 5.42466 13.2092 11.286C13.3951 17.1474 18.2973 21.7482 24.1587 21.5623Z" />
+			<path
+				d="M5.64626 20.0297C11.1568 19.9267 15.7407 24.2062 16.0362 29.6855L24.631 29.4616L24.1476 10.8081L5.41797 11.296L5.64626 20.0297Z"
+				stroke="#040306" stroke-miterlimit="10" />
+		</g>
+		<defs>
+			<filter id="filter0_d" x="0.905273" y="0" width="37.8663" height="38.1979" filterUnits="userSpaceOnUse"
+				color-interpolation-filters="sRGB">
+				<feFlood flood-opacity="0" result="BackgroundImageFix" />
+				<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" />
+				<feOffset dy="4" />
+				<feGaussianBlur stdDeviation="2" />
+				<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0" />
+				<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+				<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+			</filter>
+		</defs>
+	</svg>
+
+
+	<svg class="header-shape-3" width="39" height="40" viewBox="0 0 39 40" fill="none"
+		xmlns="http://www.w3.org/2000/svg">
+		<path d="M0.965848 20.6397L0.943848 38.3906L18.6947 38.4126L18.7167 20.6617L0.965848 20.6397Z" stroke="#040306"
+			stroke-miterlimit="10" />
+		<path class="path" d="M10.4966 11.1283L10.4746 28.8792L28.2255 28.9012L28.2475 11.1503L10.4966 11.1283Z" />
+		<path d="M20.0078 1.62949L19.9858 19.3804L37.7367 19.4024L37.7587 1.65149L20.0078 1.62949Z" stroke="#040306"
+			stroke-miterlimit="10" />
+	</svg>
+
+</section>
+
+<th:block th:replace="~{/layouts/footer :: footer}"></th:block>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="social_media_login_btns">
+		<div class="login_option">
+			<!-- Google button -->
+			<div class="option">
+				<a href="#">
+					<img src="/images/logos/google.png" alt="Google" />
+					<span>Google</span>
+				</a>
+			</div>
+			<!-- Apple button -->
+			<div class="option">
+				<a href="#">
+					<img src="/images/logos/apple.png" alt="Apple" />
+					<span>Apple</span>
+				</a>
+			</div>
+		</div>
+		<!-- Login option separator -->
+		<p class="separator">
+			<span>or</span>
+		</p>
+	</th:block>
+</body>
+
+</html>

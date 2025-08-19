@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="comment(comment)">
+		<div class="media comment-box d-block d-sm-flex mb-4" th:data-comment-id="${comment.id}">
+			<a class="d-inline-block mr-2 mb-3 mb-md-0" th:href="${comment.user.image}" target="_blank">
+				<img th:src="${comment.user.image}" style="width: 50px; height: 50px;" class="mr-3 rounded-circle"
+					alt="">
+			</a>
+			<div class="media-body">
+				<div class="d-flex align-items-end">
+					<a th:href="@{'\\u\\' + ${comment.user.username}}" class="h4 d-inline-block mb-1"
+						th:text="${comment.user.name}">User Name</a>
+					<small class="text-muted ml-2 mb-1 font-weight-600" th:text="${(authUser != null and authUser.role == 'admin') 
+						                  ? #temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm:ss') 
+						                  : comment.createdTimeAgo}">
+					</small>
+
+				</div>
+				<p th:text="${comment.message}">Comment content</p>
+
+				<!-- Show for logged-in users -->
+				<button class="text-primary btn-no-style font-weight-600 reply-btn" th:if="${authUser != null}"
+					th:data-comment-id="${comment.id}">
+					Reply
+				</button>
+
+				<!-- Show for guests -->
+				<a class="text-primary btn-no-style font-weight-600 reply-btn" th:if="${authUser == null}"
+					th:href="@{\\login}">
+					Reply
+				</a>
+
+
+				<div id="reply-section"></div>
+
+				<!-- Replies -->
+				<div class="replies mt-3" th:data-comment-id="${comment.id}">
+					<th:block
+						th:replace="~{/recipes/partials/replies-list :: replies_list(replies=${comment.replies})}">
+					</th:block>
+
+					<!-- Show Load more button if needed -->
+					<button class="btn p-1 px-2 load-more-replies" th:if="${comment.hasMoreReplies}"
+						th:data-comment-id="${comment.id}" data-page="1">
+						Load more replies
+					</button>
+				</div>
+
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>

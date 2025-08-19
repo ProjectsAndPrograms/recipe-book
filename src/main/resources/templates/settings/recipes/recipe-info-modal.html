@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="recipe-info-modal">
+		<div class="modal fade" id="recipeInfoModal" tabindex="-1" aria-labelledby="recipeInfoModal" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h1 class="modal-title">Recipe Info</h1>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+					<div class="modal-body mb-2">
+						<table class="table table-bordered">
+							<tbody>
+								<tr>
+									<th>Difficulty</th>
+									<td><span id="difficulty"></span></td>
+								</tr>
+								<tr>
+									<th>Servings</th>
+									<td><span id="servings"></span></td>
+								</tr>
+								<tr>
+									<th>Prep Time</th>
+									<td><span id="prepTime"></span></td>
+								</tr>
+								<tr>
+									<th>Cook Time</th>
+									<td><span id="cookTime"></span></td>
+								</tr>
+								<tr>
+									<th>Category</th>
+									<td><span id="category"></span></td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</th:block>
+
+</body>
+
+</html>

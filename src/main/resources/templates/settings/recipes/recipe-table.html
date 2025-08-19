@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="recipe_table">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Image</th>
+						<th>Recipe</th>
+						<th>Date</th>
+						<th>Report</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="recipe, iterStat  : ${recipes}">
+						<th th:text="${firstItemIndex + iterStat.index + 1}"></th>
+						<td>
+							<div class="recipe-image-box">
+								<img th:src="${recipe.primaryImage}" alt="recipe-image">
+							</div>
+						</td>
+						<td>
+							<a class="post-title" th:href="@{/recipes/{id}(id=${recipe.id})}"
+								th:text="${@stringUtil.truncate(recipe.title, 40)}">Recipe
+								Title</a>
+						</td>
+						<td>
+							<th:block th:text="${#temporals.format(recipe.createdAt, 'dd MMM yyyy hh:mm a')}">
+							</th:block>
+						</td>
+						<td>
+							<div class="d-flex flex-column">
+
+								<div class="d-flex align-items-center">
+									<svg class="w-full h-full absolute inset-0" viewBox="0 0 24 24"
+										preserveAspectRatio="xMidYMid meet" focusable="false"
+										style="pointer-events: none; display: block; width: 20px; height: 20px;">
+										<g class="style-scope yt-icon">
+											<path
+												d="M18.77,11h-4.23l1.52-4.94C16.38,5.03,15.54,4,14.38,4c-0.58,0-1.14,0.24-1.52,0.65L7,11H3v10h4h1h9.43 c1.06,0,1.98-0.67,2.19-1.61l1.34-6C21.23,12.15,20.18,11,18.77,11z M7,20H4v-8h3V20z M19.98,13.17l-1.34,6 C18.54,19.65,18.03,20,17.43,20H8v-8.61l5.6-6.06C13.79,5.12,14.08,5,14.38,5c0.26,0,0.5,0.11,0.63,0.3 c0.07,0.1,0.15,0.26,0.09,0.47l-1.52,4.94L13.18,12h1.35h4.23c0.41,0,0.8,0.17,1.03,0.46C19.92,12.61,20.05,12.86,19.98,13.17z"
+												class="style-scope yt-icon"></path>
+										</g>
+									</svg>
+
+									<span th:text="${recipe.likeCount}"></span>
+								</div>
+								<div class="d-flex align-items-center">
+									<svg class="absolute inset-0 h-full w-full" viewBox="0 0 24 24"
+										preserveAspectRatio="xMidYMid meet" focusable="false"
+										style="pointer-events: none; display: block; width: 20px; height: 20px;">
+										<g class="style-scope yt-icon">
+											<path
+												d="M17,4h-1H6.57C5.5,4,4.59,4.67,4.38,5.61l-1.34,6C2.77,12.85,3.82,14,5.23,14h4.23l-1.52,4.94C7.62,19.97,8.46,21,9.62,21 c0.58,0,1.14-0.24,1.52-0.65L17,14h4V4H17z M10.4,19.67C10.21,19.88,9.92,20,9.62,20c-0.26,0-0.5-0.11-0.63-0.3 c-0.07-0.1-0.15-0.26-0.09-0.47l1.52-4.94l0.4-1.29H9.46H5.23c-0.41,0-0.8-0.17-1.03-0.46c-0.12-0.15-0.25-0.4-0.18-0.72l1.34-6 C5.46,5.35,5.97,5,6.57,5H16v8.61L10.4,19.67z M20,13h-3V5h3V13z"
+												class="style-scope yt-icon"></path>
+										</g>
+									</svg>
+
+									<span th:text="${recipe.dislikeCount}">0</span>
+								</div>
+								<div class="d-flex align-items-center">
+									<i class="ti-comment"></i>
+
+									<span class="ml-1 fs-6" th:text="${recipe.commentCount}"></span>
+								</div>
+							</div>
+
+						</td>
+						<td>
+							<div class="action-btns grid">
+								<button class="more recipe-info" th:data-recipe-difficulty="${recipe.difficulty}"
+									th:data-recipe-servings="${recipe.servings}"
+									th:data-recipe-prep-time="${recipe.prepTime}"
+									th:data-recipe-cook-time="${recipe.cookTime}"
+									th:data-recipe-category="${recipe.categoryName}">
+									<i class="ti-info-alt"></i>
+								</button>
+								<button class="share" data-share-title="Share Recipe"
+									th:data-share-url="${recipe.shareUrl}"
+									data-share-message="Share this recipe with your friends">
+									<i class="ti-share"></i>
+								</button>
+								<a th:href="@{/recipes/{id}/edit(id=${recipe.id})}" class="edit">
+									<i class="ti-pencil-alt"></i>
+								</a>
+								<form th:action="@{/recipes/{id}/delete(id=${recipe.id})}" method="post"
+									th:method="delete">
+									<button class="delete">
+										<i class="ti-trash"></i>
+									</button>
+								</form>
+							</div>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</th:block>
+</body>
+
+</html>

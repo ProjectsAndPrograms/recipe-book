@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+<th:block th:replace="~{/layouts/header :: header}"></th:block>
+
+<section class="section site-page">
+	<div class="container">
+		<header>
+			<h1 th:text="${sitePage.title}">Title</h1>
+			<div class="meta">Effective date: <strong
+					th:text="${#temporals.format(sitePage.createdAt, 'dd MMM yyyy')}">{{EFFECTIVE_DATE}}</strong></div>
+
+		</header>
+
+		<div th:utext="${sitePage.content}"></div>
+
+	</div>
+</section>
+
+<th:block th:replace="~{/layouts/footer :: footer}"></th:block>
+
+</html>

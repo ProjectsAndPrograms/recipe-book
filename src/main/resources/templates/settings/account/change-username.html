@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="change_username">
+		<div class="mb-4">
+			<h3>Change Username</h3>
+			<hr class="mt-0 mb-3">
+			<p class="text-muted small mb-3">
+				Changing your username can impact how others find or recognize you. Proceed only if necessary.
+			</p>
+
+			<button class="btn btn-sm btn-outline-primary rounded" id="changeUsername" data-bs-toggle="modal"
+				data-bs-target="#changeUsernameModal">Change Username</button>
+
+			<ul class="pt-3 px-3">
+				<li>We <strong>will not</strong> set up redirects for your old profile page.</li>
+				<li><strong>All</strong> of your previous links will no longer work.</li>
+				<li>Renaming may take a few minutes to complete.</li>
+			</ul>
+		</div>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="changeUsernameModal" tabindex="-1" aria-labelledby="changeUsernameModal"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Change Username</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+							<i class="ti-close"></i>
+						</button>
+					</div>
+					<form th:action="@{/settings/account/change-username}" method="post">
+						<div class="modal-body">
+							<div class="form-group">
+								<label for="username">New Username</label>
+								<input type="text" id="username" name="username" class="form-control" required />
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button id="updateUsernameBtn" type="submit" class="btn btn-primary" disabled>
+								Update
+							</button>
+						</div>
+					</form>
+
+				</div>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>

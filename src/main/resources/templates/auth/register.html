@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layouts/auth-layout :: header}"></th:block>
+
+<body>
+
+	<div class="login_form">
+		<a class="home-button" th:href="@{/}">
+			<svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24">
+				<path fill="#fff"
+					d="M4 19v-9q0-.475.213-.9t.587-.7l6-4.5q.525-.4 1.2-.4t1.2.4l6 4.5q.375.275.588.7T20 10v9q0 .825-.588 1.413T18 21h-3q-.425 0-.712-.288T14 20v-5q0-.425-.288-.712T13 14h-2q-.425 0-.712.288T10 15v5q0 .425-.288.713T9 21H6q-.825 0-1.412-.587T4 19" />
+			</svg>
+		</a>
+		<!-- Login form container -->
+		<form th:action="@{/register}" method="post" th:object="${userDto}">
+			<h3>Register</h3>
+			<!--/*	
+				<th:block th:replace="~{/auth/social-media-login-btns :: social_media_login_btns}"></th:block>
+			*/-->
+
+			<th:block th:replace="~{/fragments/alert :: alert}"></th:block>
+
+
+			<div class="input_box">
+				<label for="name">Username</label>
+				<input type="text" th:field="*{username}" id="username" placeholder="Create your username" required />
+			</div>
+
+			<div class="input_box">
+				<label for="email">Email</label>
+				<input type="email" th:field="*{email}" id="email" placeholder="Enter email address" required />
+			</div>
+
+			<div class="input_box">
+				<div class="password_title">
+					<label for="password">Create Password</label>
+				</div>
+				<input type="password" th:field="*{password}" id="password" placeholder="Enter your password"
+					required />
+			</div>
+
+			<button type="submit">Register</button>
+			<p class="sign_up">Already have an account? <a th:href="@{/login}">Sign In</a></p>
+		</form>
+
+
+	</div>
+
+	<script th:src="@{/js/pages/register.js}"></script>
+	<th:block th:replace="~{/layouts/auth-layout :: footer}"></th:block>
+</body>
+
+</html>

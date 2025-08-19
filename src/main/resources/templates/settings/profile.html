@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/settings/partials/header :: header}"></th:block>
+
+	<div class="content">
+		<th:block th:replace="~{/fragments/alert :: alert}"></th:block>
+
+		<h3>Public Profile</h3>
+		<hr class="mt-0 mb-3">
+		<form th:action="@{/settings/profile/update}" method="post" enctype="multipart/form-data">
+
+			<div class="row">
+				<div class="col-md-8">
+
+					<div class="form-group">
+						<label for="title">Name</label>
+						<input type="text" name="name" id="title" th:value="${profileuser.name}" class="form-control"
+							required />
+						<small class="text-muted">Your name may appear where you comment anyone. You can remove it at
+							any
+							time.</small>
+					</div>
+
+					<div class="form-group">
+						<label for="title">Email</label>
+						<input type="email" name="email" id="email" th:value="${profileuser.email}"
+							placeholder="example@gmail.com" class="form-control" required />
+					</div>
+
+					<div class="form-group">
+						<label for="description">Bio </label>
+						<textarea name="bio" id="description" class="form-control" rows="5"
+							placeholder="Tell us a little bit about yourself"><th:block th:text="${#strings.trim(profileuser.bio)}"></th:block></textarea>
+					</div>
+					<div class="form-group">
+						<label for="title">URL</label>
+						<input type="text" name="url" id="url" placeholder="Your website URL"
+							th:value="${profileuser.url}" class="form-control" required />
+					</div>
+					<div class="form-group">
+						<label for="title">Social accounts</label>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="ti-youtube"></i>
+							</span>
+							<input type="text" name="socialLinks[youtube]"
+								th:value="${profileuser?.socialLinks?.get('youtube') ?: ''}" class="form-control"
+								placeholder="Youtube" aria-label="Youtube" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="ti-linkedin"></i>
+							</span>
+							<input type="text" name="socialLinks[linkedin]"
+								th:value="${profileuser?.socialLinks?.get('linkedin') ?: ''}" class="form-control"
+								placeholder="Linkedin" aria-label="Linkedin" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="ti-facebook"></i>
+							</span>
+							<input type="text" name="socialLinks[facebook]"
+								th:value="${profileuser?.socialLinks?.get('facebook') ?: ''}" class="form-control"
+								placeholder="Facebook" aria-label="Facebook" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="ti-twitter"></i>
+							</span>
+							<input type="text" name="socialLinks[twitter]"
+								th:value="${profileuser?.socialLinks?.get('twitter') ?: ''}" class="form-control"
+								placeholder="Twitter" aria-label="Twitter" aria-describedby="basic-addon1">
+						</div>
+
+						<div class="input-group mb-3">
+							<span class="input-group-text" id="basic-addon1">
+								<i class="ti-pinterest"></i>
+							</span>
+							<input type="text" name="socialLinks[pinterest]"
+								th:value="${profileuser?.socialLinks?.get('pinterest') ?: ''}" class="form-control"
+								placeholder="Pinterest" aria-label="Pinterest" aria-describedby="basic-addon1">
+						</div>
+					</div>
+
+
+				</div>
+				<div class="col-md-4">
+					<div class="profile-image">
+						<div class="image-box">
+							<img th:src="${profileuser.image}" alt="user-image">
+							<label class="edit-image" for="image-input"><i class="ti-pencil-alt"></i> Edit</label>
+							<input type="file" accept=".png, .jpg, .jpeg, .webp, .svg, .avif" class="d-none"
+								id="image-input">
+						</div>
+					</div>
+				</div>
+			</div>
+			<button type="submit" class="btn btn-primary">Update Profile</button>
+
+		</form>
+	</div>
+
+
+<script th:src="@{/js/pages/profile.js}"></script>
+<th:block th:replace="~{/settings/partials/footer :: footer}"></th:block>

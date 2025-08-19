@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="social_links">
+		<!-- Social -->
+		<div class="widget">
+			<h4 class="widget-title"><span>Social Links</span></h4>
+			<ul class="list-inline widget-social">
+				<li th:each="socialLink : ${organizationSocialLinks}" class="list-inline-item" >
+					<a th:href="@{${socialLink.url}}">
+						<i th:class="${'ti-' + socialLink.platformName.toLowerCase()}"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</th:block>
+
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layouts/header :: header}"></th:block>
+
+<th:block th:replace="~{/home/hero-section :: hero-section}"></th:block>
+
+
+<section class="section pb-0">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-4 mb-5" th:if="${randomRecipe != null}">
+				<h2 class="h5 section-title">Editors Pick</h2>
+
+				<article class="card">
+					<div class="post-slider slider-sm">
+						<img th:src="${randomRecipe.primaryImage}" class="card-img-top" alt="post-thumb">
+
+					</div>
+
+					<div class="card-body">
+						<h3 class="h4 mb-3">
+							<a class="post-title" th:href="@{'/recipes/' + ${randomRecipe.id}}"
+								th:text="${randomRecipe.title}"></a>
+						</h3>
+						<ul class="card-meta list-inline">
+							<li class="list-inline-item">
+								<span class="card-meta-author">
+									<img th:src="${randomRecipe.userImage}" alt="Author">
+									<span th:text="${randomRecipe.userName}">Author</span>
+								</span>
+							</li>
+							<li class="list-inline-item">
+								<i class="ti-timer"></i>
+								<span th:text="${randomRecipe.prepTime + randomRecipe.cookTime} + ' Min To Cook'">0 Min
+									To
+									Cook</span>
+							</li>
+							<li class="list-inline-item">
+								<i class="ti-layers"></i>
+								<span th:text="${randomRecipe.difficulty}">Easy</span>
+							</li>
+							<li class="list-inline-item">
+								<ul class="card-meta-tag list-inline">
+									<li class="list-inline-item">
+										<a th:href="@{'/categories/' + ${randomRecipe.categoryId}}"
+											th:text="${randomRecipe.categoryName}">Category</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<p th:text="${#strings.abbreviate(randomRecipe.description, 100)}"></p>
+						<a th:href="@{'/recipes/' + ${randomRecipe.id}}" class="btn btn-outline-primary">Read More</a>
+					</div>
+				</article>
+			</div>
+
+
+			<div class="col-lg-4 mb-5">
+				<h2 class="h5 section-title">Trending Post</h2>
+				<th:block th:if="${top3PopularRecipes != null}">
+					<article class="card mb-4" th:each="recipe : ${top3PopularRecipes}">
+						<div class="card-body d-flex">
+							<img class="card-img-sm" th:src="${recipe.primaryImage}" />
+							<div class="ml-3">
+								<h4><a th:href="@{'/recipes/' + ${recipe.id}}" class="post-title" th:text="${recipe.title}"></a>
+								</h4>
+								<ul class="card-meta list-inline mb-0">
+									<li class="list-inline-item">
+										<i class="ti-calendar"></i>
+										<th:block th:text="${#temporals.format(recipe.createdAt, 'dd MMM yyyy')}">
+										</th:block>
+									</li>
+									<li class="list-inline-item">
+										<i class="ti-timer"></i>
+										<span th:text="${recipe.prepTime + recipe.cookTime} + ' Min To Cook'">0 Min To
+											Cook</span>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</article>
+				</th:block>
+
+			</div>
+
+			<div class="col-lg-4 mb-5">
+				<h2 class="h5 section-title">Popular Post</h2>
+
+				<article class="card" th:if="${mostPopularRecipe != null}">
+					<div class="post-slider slider-sm">
+						<img th:src="${mostPopularRecipe.primaryImage}" class="card-img-top" alt="post-thumb">
+
+					</div>
+
+					<div class="card-body">
+						<h3 class="h4 mb-3">
+							<a class="post-title" th:href="@{'/recipes/' + ${mostPopularRecipe.id}}"
+								th:text="${mostPopularRecipe.title}"></a>
+						</h3>
+						<ul class="card-meta list-inline">
+							<li class="list-inline-item">
+								<span class="card-meta-author">
+									<img th:src="${mostPopularRecipe.userImage}" alt="Author">
+									<span th:text="${mostPopularRecipe.userName}">Author</span>
+								</span>
+							</li>
+							<li class="list-inline-item">
+								<i class="ti-timer"></i>
+								<span th:text="${mostPopularRecipe.prepTime + mostPopularRecipe.cookTime} + ' Min To Cook'">0 Min
+									To
+									Cook</span>
+							</li>
+							<li class="list-inline-item">
+								<i class="ti-layers"></i>
+								<span th:text="${mostPopularRecipe.difficulty}">Easy</span>
+							</li>
+							<li class="list-inline-item">
+								<ul class="card-meta-tag list-inline">
+									<li class="list-inline-item">
+										<a th:href="@{'/categories/' + ${mostPopularRecipe.categoryId}}"
+											th:text="${mostPopularRecipe.categoryName}">Category</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<p th:text="${#strings.abbreviate(mostPopularRecipe.description, 100)}"></p>
+						<a th:href="@{'/recipes/' + ${mostPopularRecipe.id}}" class="btn btn-outline-primary">Read More</a>
+					</div>
+				</article>
+			</div>
+			<div class="col-12">
+				<div class="border-bottom border-default"></div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block th:replace="~{/recipes/recipe-cards :: recipe-cards}"></th:block>
+
+<th:block th:replace="~{/layouts/footer :: footer}"></th:block>

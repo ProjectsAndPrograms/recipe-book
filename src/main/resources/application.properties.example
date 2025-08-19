@@ -1,0 +1,24 @@
+spring.application.name=RecipeBook
+
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+spring.jpa.show-sql=true
+spring.datasource.url=jdbc:mysql://localhost:3306/recipe_book?allowPublicKeyRetrieval=true&useSSL=false
+
+spring.datasource.username=root
+spring.datasource.password=root
+
+# Hibernate
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.hibernate.ddl-auto=update
+
+# Custom upload directory
+upload.directory=/
+
+spring.servlet.multipart.enabled=true
+spring.servlet.multipart.max-file-size=10MB
+spring.servlet.multipart.max-request-size=50MB
+
+server.tomcat.max-part-count=50
+server.tomcat.max-part-header-size=2048
+
+spring.mvc.hiddenmethod.filter.enabled=true

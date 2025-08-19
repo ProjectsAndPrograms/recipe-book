@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="recipe-form">
+
+		<section class="section-sm pt-0">
+			<div class="container">
+				<form
+					th:action="${recipeDto.id != null} ? @{/recipes/{id}/update(id=${recipeDto.id})} : @{/recipes/save}"
+					method="post" enctype="multipart/form-data" th:object="${recipeDto}" id="recipeForm">
+					<input type="hidden" th:field="*{id}" />
+
+					<div class="row">
+						<div class="col-lg-9 mx-auto">
+							<th:block th:replace="~{/fragments/alert :: alert}"></th:block>
+							<div class="form-group">
+								<label for="title">Title (Required)</label>
+								<input type="text" th:field="*{title}" id="title" class="form-control" required />
+							</div>
+
+							<div class="form-group">
+								<label for="description">Short Description</label>
+								<input type="text" th:field="*{description}" id="description" class="form-control" />
+							</div>
+
+							<div class="form-group">
+								<label for="instructions">Instructions</label>
+								<textarea th:field="*{instructions}" id="instructions"
+									class="form-control summernote"></textarea>
+							</div>
+
+							<div class="row">
+								<div class="col">
+									<div class="form-group">
+										<label for="prepTime">Prep Time (minutes)</label>
+										<input type="number" th:field="*{prepTime}" id="prepTime" class="form-control"
+											min="0" />
+									</div>
+								</div>
+								<div class="col">
+									<div class="form-group">
+										<label for="cookTime">Cook Time (minutes)</label>
+										<input type="number" th:field="*{cookTime}" id="cookTime" class="form-control"
+											min="0" />
+									</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<label for="servings">Servings</label>
+								<input type="number" th:field="*{servings}" id="servings" class="form-control"
+									min="1" />
+							</div>
+
+							<div class="form-group">
+								<label for="difficulty">Difficulty</label>
+								<select th:field="*{difficulty}" id="difficulty" class="form-control">
+									<option value="">Select difficulty</option>
+									<option value="Easy">Easy</option>
+									<option value="Medium">Medium</option>
+									<option value="Hard">Hard</option>
+								</select>
+							</div>
+
+							<div class="form-group">
+								<label for="category">Category</label>
+								<select th:field="*{categoryId}" id="category" class="form-control">
+									<option value="" disabled>Select Category</option>
+									<option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"
+										th:selected="${cat.id == recipeDto.categoryId}">
+									</option>
+								</select>
+							</div>
+
+
+							<div class="form-group">
+								<label for="images">Upload Images</label>
+								<input type="file" name="images" id="recipeImages" class="form-control" accept=".jpg, .png, .jpeg, .svg, .avif, .webp, .gif" multiple />
+
+								<div class="recipe-image-box" id="recipeImageBox">
+									<div class="recipe-image" th:if="${recipeDto.imagesDtos != null}"
+										th:each="imageDto : ${recipeDto.imagesDtos}">
+										<img th:src="@{${imageDto.imagePath}}" alt="recipe-image" >
+										<button type="button" class="recipe-image-delete-btn" th:data-recipe-image-id="${imageDto.id}">
+											<i class="ti-trash"></i>
+										</button>
+									</div>
+								</div>
+							</div>
+
+
+
+						</div>
+
+						<div class="col-lg-3 mx-auto">
+
+							<div class="form-group">
+								<label for="ingredients">Ingredients</label><br>
+								<button class="btn btn-primary mb-4 p-2 px-3" data-bs-toggle="modal" type="button"
+									data-bs-target="#ingredientModal">
+									<i class="ti-plus"></i> Add Ingredients
+								</button>
+
+								<!-- Ingredient list -->
+								<div class="ingredients-box">
+
+									<div class="ingredient" th:if="${ingredients != null}"
+										th:each="ingredient : ${ingredients}">
+										<div class="name" th:text="${ingredient.name}">...</div>
+										<input type="hidden" th:value="${ingredient.name}" name="ingredient_names[]" />
+
+										<div class="qty" th:text="${ingredient.quantity}"></div>
+										<input type="hidden" th:value="${ingredient.quantity}"
+											name="ingredient_quantities[]" />
+
+										<div class="unit"
+											th:text="${@stringUtil.isEmpty(ingredient.unit) ? ingredient.note : ingredient.unit}">
+											g</div>
+										<input type="hidden" th:value="${ingredient.unitId}" name="ingredient_units[]" />
+
+										<input type="hidden" th:value="${ingredient.note}" name="ingredient_notes[]"
+											value="100g" />
+
+										<span class="remove">&times;</span>
+									</div>
+
+								</div>
+							</div>
+
+
+							<div class="form-group">
+								<div class="form-group">
+									<label for="title">Tags</label><br>
+									<button class="btn btn-primary mb-4 p-2 px-3" data-bs-toggle="modal" type="button"
+										data-bs-target="#tagModal">
+										<i class="ti-settings"></i> Customize Tags
+									</button>
+
+									<div class="tag-box">
+										<div class="tag" th:if="${tags != null}" th:each="tag: ${tags}">
+											<th:block th:text="${tag.name}"></th:block>
+											<input type="hidden" th:value="${tag.name}" name="tags[]">
+											<span class="remove">&times;</span>
+										</div>
+									</div>
+
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+					<button type="submit" class="btn btn-primary">Save Recipe</button>
+				</form>
+			</div>
+		</section>
+
+
+		<!-- Modal -->
+		<div class="modal fade" id="ingredientModal" tabindex="-1" aria-labelledby="ingredientModalLabel"
+			aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="ingredientModalLabel">Add Ingredient to Your
+							Recipe</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+														<i class="ti-close"></i>
+													</button>
+					</div>
+					<div class="modal-body">
+
+						<!-- Ingredient Name -->
+						<div class="form-group mb-3">
+							<label for="ingredientName"><strong>Ingredient Name</strong></label>
+							<input type="text" id="ingredientName" class="form-control" placeholder="e.g., Sugar, Salt"
+								required />
+						</div>
+
+						<!-- Quantity and Unit -->
+						<div class="row">
+							<div class="col-md-6 form-group mb-3">
+								<label for="ingredientQty"><strong>Quantity</strong></label>
+								<input type="text" id="ingredientQty" class="form-control numeric"
+									placeholder="e.g., 2, 100, ½" />
+							</div>
+
+							<div class="col-md-6 form-group mb-3">
+								<label for="ingredientUnit"><strong>Unit of
+										Measure</strong></label>
+
+								<select class="form-select" id="ingredientUnit">
+									<option selected disabled value="">e.g., grams, tsp, cups</option>
+									<option th:each="unit : ${units}" th:value="${unit.id}" th:text="${unit.name}">
+									</option>
+								</select>
+
+							</div>
+						</div>
+
+						<!-- Optional Note -->
+						<div class="form-group mb-3">
+							<label for="ingredientNote"><strong>Note <small
+										class="text-muted">(optional)</small></strong></label>
+							<input type="text" id="ingredientNote" class="form-control"
+								placeholder="e.g., as per taste, as needed, for frying" />
+							<small class="form-text text-muted">
+								Use this when quantity or unit doesn't apply.
+							</small>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button id="addIngredientBtn" type="button" class="btn btn-primary">Add
+							Ingredient</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Modal -->
+		<div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="tagModalLabel">Manage Tags</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+													<i class="ti-close"></i>
+												</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="title">Tag</label>
+							<input type="text" id="tagTitle" class="form-control" required />
+						</div>
+						<div class="tag-box">
+							<div class="tag" th:if="${tags != null}" th:each="tag: ${tags}">
+								<th:block th:text="${tag.name}"></th:block>
+								<input type="hidden" th:value="${tag.name}" name="tags[]">
+								<span class="remove">&times;</span>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="addTagBtn" type="button" class="btn btn-primary">Add
+							Tag</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</th:block>
+</body>
+
+</html>

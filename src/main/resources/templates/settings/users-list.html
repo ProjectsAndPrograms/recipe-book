@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/settings/partials/header :: header}"></th:block>
+
+<div class="content users-list px-0 px-sm-4">
+	<th:block th:replace="~{/fragments/alert :: alert}"></th:block>
+
+	<h3>Users</h3>
+	<hr class="mt-0 mb-3">
+
+	<div class="table-responsive">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Image</th>
+					<th>User Name</th>
+					<th>Email</th>
+					<th>Followers</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user, iterStat  : ${users}">
+					<th th:text="${firstItemIndex + iterStat.index + 1}"></th>
+					<td>
+						<div class="image-box">
+							<img th:src="${user.image}" alt="user-image">
+						</div>
+					</td>
+					<td>
+						<a class="post-title" th:href="@{'/u/' + ${user.username}}" th:text="${user.name}">
+							User Name
+						</a>
+						<br>
+						<i th:text="${'@' + user.username}"></i>
+					</td>
+					<td>
+						<span class="" th:text="${user.email}"></span>
+					</td>
+					<td>
+						<div>
+							<span th:text="${user.followers}">0</span>
+							<small>Followers</small>
+						</div>
+						<div>
+							<span th:text="${user.following}">0</span>
+							<small>Followings</small>
+						</div>
+					</td>
+					<td>
+						<div class="action-btns">
+							<button class="more user-info-opener mb-0" th:data-user-username="${user.username}"
+								th:data-user-image="${user.image}" th:data-user-name="${user.name}"
+								th:data-user-created-at="${user.createdAt}" th:data-user-deleted-at="${user.deletedAt}"
+								th:data-user-bio="${user.bio}" th:data-user-followers="${user.followers}"
+								th:data-user-following="${user.following}" th:data-user-likes="${user.likeCount}"
+								th:data-user-dislikes="${user.dislikeCount}" th:data-user-recipes="${user.recipeCount}">
+								<i class="ti-info-alt"></i>
+							</button>
+							<!--/*
+							<button class="share">
+								<i class="ti-comments"></i>
+							</button>
+							*/-->
+							<form th:action="@{/admin/settings/users/{id} (id=${user.id})}" method="post"
+								th:method="DELETE">
+								<button class="delete" type="submit"><i class="ti-trash"></i></button>
+							</form>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<th:block th:replace="~{/layouts/pagination :: pagination}"></th:block>
+
+
+
+</div>
+
+<div class="modal fade" id="userInfoModal" tabindex="-1" aria-labelledby="userInfoModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered">
+		<div class="modal-content border-0 shadow-lg">
+			<div class="modal-header">
+				<h5 class="modal-title" id="userInfoModalLabel">
+					<i class="ti-user me-2"></i> User Info
+				</h5>
+				<button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close">
+					<i class="ti-close"></i>
+				</button>
+			</div>
+			<div class="modal-body p-4">
+				<div class="d-flex align-items-center mb-4">
+					<div class="image-box">
+						<img id="userImage" src="" alt="User Image" class="rounded-circle me-3 border">
+					</div>
+					<div class="ml-2">
+						<h4 id="userName" class="mb-1"></h4>
+						<p id="userUsername" class="text-muted mb-0"></p>
+					</div>
+				</div>
+
+				<p id="userBio" class="mb-4"></p>
+
+				<div class="row text-center mb-3 gap30v10h">
+					<div class="col">
+						<h5 id="userRecipes" class="mb-0 fw-bold">0</h5>
+						<small class="text-muted">Recipes</small>
+					</div>
+					<div class="col">
+						<h5 id="userLikes" class="mb-0 fw-bold">0</h5>
+						<small class="text-muted">Likes</small>
+					</div>
+					<div class="col">
+						<h5 id="userDislikes" class="mb-0 fw-bold">0</h5>
+						<small class="text-muted">Dislikes</small>
+					</div>
+					<div class="col">
+						<h5 id="userFollowers" class="mb-0 fw-bold"></h5>
+						<small class="text-muted">Followers</small>
+					</div>
+					<div class="col">
+						<h5 id="userFollowing" class="mb-0 fw-bold"></h5>
+						<small class="text-muted">Following</small>
+					</div>
+				</div>
+				<div class="d-flex flex-wrap gap-2 justify-content-between my-2 mb-1 mt-4 border-1 border-top pt-3">
+					<div><strong>Joined:</strong> <span id="userCreatedAt"></span></div>
+					<div><strong>Deleted At:</strong> <span id="userDeletedAt"></span></lidiv>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<script th:src="@{/js/pages/user-list.js}"></script>
+	<th:block th:replace="~{/settings/partials/footer :: footer}"></th:block>

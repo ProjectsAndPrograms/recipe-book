@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layouts/header :: header}"></th:block>
+<section class="section">
+	<div class="container pt-4">
+		<div class="row">
+			<div class=" col-lg-8 mb-5 mb-lg-0">
+				<article>
+					<div class="post-slider mb-4">
+
+						<img th:each="image : ${recipe.imagesDtos}" th:src="${image.imagePath}" class="card-img"
+							alt="post-thumb">
+					</div>
+					<h1 class="h2" th:text="${recipe.title}">Recipe Title</h1>
+					<ul class="card-meta my-3 list-inline">
+						<li class="list-inline-item">
+							<a th:href="@{/u/{username}(username=${user.username})}" class="card-meta-author">
+								<img th:src="${user.image}" alt="Profile">
+								<span th:text="${recipe.userName}">John Doe</span>
+							</a>
+						</li>
+						<li class="list-inline-item">
+							<th:block th:replace="~{/recipes/partials/like-dislike :: like_dislike}"></th:block>
+						</li>
+						<li class="list-inline-item">
+							<i class="ti-timer"></i><span
+								th:text="${recipe.prepTime + recipe.cookTime} + ' Min To Serve'">0 Min To Serve</span>
+						</li>
+						<li class="list-inline-item">
+							<i class="ti-calendar"></i>
+							<th:block th:text="${#temporals.format(recipe.createdAt, 'dd MMM yyyy')}"></th:block>
+						</li>
+						<li class="list-inline-item">
+							Difficulty : <span th:text="${recipe.difficulty}">Easy</span>
+
+						</li>
+						<li class="list-inline-item">
+							<ul class="card-meta-tag list-inline">
+								<li class="list-inline-item">
+									<a th:href="@{'/categories/' + ${recipe.categoryId}}"
+										th:text="${recipe.categoryName}">Category</a>
+								</li>
+							</ul>
+						</li>
+
+					</ul>
+					<div class="content">
+						<p th:text="${recipe.description}"></p>
+						<h4 id="heading-example">Ingredients</h4>
+
+						<ul class="mt-3">
+						    <li th:each="ingredient : ${ingredients}">
+						        <b th:text="${ingredient.name}"></b>
+						        -
+						        <span th:if="${ingredient.note != null && !#strings.isEmpty(ingredient.note)}"
+						              th:text="${ingredient.note}"></span>
+						        <b th:if="${ingredient.note == null or #strings.isEmpty(ingredient.note)}"
+						           th:text="${ingredient.quantity + ' ' + ingredient.unit}"></b>
+						    </li>
+						</ul>
+
+
+
+
+						<h4 id="heading-example">Instructions</h4>
+
+						<th:block th:utext="${recipe.instructions}"></th:block>
+					</div>
+				</article>
+				<div class="mt-5">
+					<div class="mb-5 border-top mt-4 pt-5">
+						<h3 class="mb-4">Comments</h3>
+
+						<div id="commentSection" class="recipe-comments" th:data-recipe-id="${recipe.id}"
+							th:data-auth-user-image="@{${ authUser != null ? authUser.image : ''}}">
+						</div>
+						<button id="loadMoreBtn" class="btn btn-primary mb-4">Load More</button>
+
+						<h3 class="mb-4">Leave a Reply</h3>
+						<form th:action="@{/recipe/comment}" th:object="${comment_dto}" id="commentForm" method="POST">
+							<div class="alert alert-dismissible fade no-extra-space" role="alert" id="flashMessage">
+							</div>
+
+							<div class="row">
+								<input type="hidden" th:field="*{recipeId}" />
+
+								<div class="form-group col-md-12">
+									<textarea class="form-control shadow-none" th:field="*{message}" rows="7"
+										required></textarea>
+								</div>
+							</div>
+							<button th:if="${authUser != null}" class="btn btn-primary" type="submit">Comment
+								Now</button>
+							<a th:if="${authUser == null}" class="btn btnauthUser null-primary"
+								th:href="@{\\login}">Comment Now</a>
+						</form>
+					</div>
+				</div>
+			</div>
+			<aside class="col-lg-4">
+
+
+				<!-- about me -->
+				<div class="widget widget-about">
+					<h4 class="widget-title" th:text="'Hi, I am ' + ${user.name} + '!'">Hi, I am Steve!</h4>
+					<img class="img-fluid" th:src="${user.image}" alt="Creator Pic">
+					<p th:text="${user_detail.bio}">Something about me</p>
+					<ul class="list-inline social-icons mb-3">
+						<li class="list-inline-item" th:each="social_link : ${user_social_links}">
+							<a th:href="${social_link.url}" target="_blank" rel="noopener noreferrer">
+								<i th:class="${'ti-' + social_link.platformName.toLowerCase()}"></i>
+							</a>
+						</li>
+
+					</ul>
+					<div class="d-flex g-2 align-items-center justify-content-center">
+						<button class="btn follow-btn mb-2 mx-1" th:classappend="${isFollowing ? 'active' : ''}"
+							th:text="${isFollowing ? 'Following' : 'Follow'}" id="follow-btn"
+							th:data-user-id="${user.id}">
+							Follow
+						</button>
+						<a th:href="@{/u/{username}(username=${user.username})}" class="btn btn-light mx-1 mb-2">About
+							Me</a>
+					</div>
+				</div>
+
+				<th:block th:replace="~{/fragments/promotion :: promotion}"></th:block>
+
+				<!-- authors -->
+				<div class="widget widget-author">
+					<h4 class="widget-title">Authors</h4>
+					<th:block th:each="author : ${authors}">
+						<div class="media align-items-center">
+							<div class="mr-3">
+								<img class="widget-author-image" th:src="${author.image}">
+							</div>
+							<div class="media-body">
+								<h5 class="mb-1"><a class="post-title"
+										th:href="@{/u/{username}(username=${author.username})}"><span
+											th:text="${author.name}"></span></a></h5>
+								<span th:text="${author.bio != null && #strings.length(author.bio) > 40 
+							                ? author.bio.substring(0, 30) + '...' 
+							                : author.username}"></span>
+
+							</div>
+						</div>
+					</th:block>
+
+				</div>
+				<!-- Search -->
+
+				<div class="widget">
+					<h4 class="widget-title"><span>Never Miss A News</span></h4>
+					<form action="" method="post" name="mc-embedded-subscribe-form" target="_blank"
+						class="widget-search">
+						<input class="mb-3" id="search-query" name="email" type="email" placeholder="Your Email Address"
+							required>
+						<i class="ti-email"></i>
+						<button type="submit" class="btn btn-primary btn-block" name="subscribe">Subscribe now</button>
+
+					</form>
+				</div>
+
+				<!-- categories -->
+				<div class="widget widget-categories">
+					<h4 class="widget-title"><span>Categories</span></h4>
+					<ul class="list-unstyled widget-list">
+						<li th:each="category : ${categories}">
+							<a th:href="@{/recipes(categoryId=${category.id})}" class="d-flex">
+								<th:block th:text="${category.name}">Category</th:block>
+								<small class="ml-auto">(<b th:text="${category.recipeCount}"></b>)</small>
+							</a>
+						</li>
+					</ul>
+				</div><!-- tags -->
+				<div class="widget">
+					<h4 class="widget-title"><span>Tags</span></h4>
+					<ul class="list-inline widget-list-inline widget-card">
+						<li th:each="tag : ${tags}" class="list-inline-item">
+							<a th:href="@{/recipes/search?tagId={id}(id=${tag.id})}" th:text="${tag.name}"></a>
+						</li>
+					</ul>
+					<th:block th:if="${#lists.isEmpty(tags)}">
+						<p>No Tags.</p>
+					</th:block>
+
+				</div><!-- recent post -->
+				<div class="widget">
+					<h4 class="widget-title">Recent Post</h4>
+
+					<!-- post-item -->
+					<article th:each="recipe : ${recent_recipies}" class="widget-card">
+						<div class="d-flex">
+							<img class="card-img-sm" th:src="${recipe.primaryImage}">
+							<div class="ml-3">
+								<h5><a class="post-title" th:href="@{'/recipes/' + ${recipe.id}}"
+										th:text="${recipe.title}"></a></h5>
+								<ul class="card-meta list-inline mb-0">
+									<li class="list-inline-item mb-0">
+										<i class="ti-calendar"></i>
+										<th:block th:text="${#temporals.format(recipe.createdAt, 'dd MMM yyyy')}">
+										</th:block>
+
+									</li>
+								</ul>
+							</div>
+						</div>
+					</article>
+
+				</div>
+
+
+				<th:block th:replace="~{/fragments/social-links :: social_links}"></th:block>
+
+			</aside>
+		</div>
+</section>
+
+<script th:src="@{/js/pages/comment.js}"></script>
+<script th:src="@{/js/pages/recipe-details.js}"></script>
+<th:block th:replace="~{/layouts/footer :: footer}"></th:block>

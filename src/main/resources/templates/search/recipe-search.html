@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Recipe Search</title>
+</head>
+
+<th:block th:replace="~{/layouts/header :: header}"></th:block>
+
+<section class="section">
+	<div class="py-4"></div>
+	
+	<div class="container">
+		<div class="row">
+
+			<!-- Recipes List -->
+			<div class="col-lg-8 mb-5 mb-lg-0 order-1 order-lg-2">
+				<h1 class="h2 mb-4">
+				    Showing recipes
+				    <span th:if="${category != null}">from <mark th:text="${category.name}">Category</mark></span>
+				    <span th:if="${title != null}">with "<mark th:text="${title}">title</mark>"</span>
+				    <span th:if="${difficulty != null}">of difficulty <mark th:text="${difficulty}">difficulty</mark></span>
+				    <span th:if="${tag != null}">tagged <mark th:text="${tag.name}">tag</mark></span>
+				</h1>
+
+				<!-- Loop Recipes -->
+				<th:block th:each="recipe : ${recipes}">
+					<article class="card mb-4">
+						<div class="post-slider">
+							<img th:each="image : ${recipe.imagesDtos}" th:src="${image.imagePath}" class="card-img-top"
+								th:alt="${recipe.title}">
+						</div>
+						<div class="card-body">
+							<h3 class="mb-3">
+								<a class="post-title" th:href="@{'/recipes/' + ${recipe.id}}"
+									th:text="${recipe.title}">Recipe Title</a>
+							</h3>
+							<ul class="card-meta list-inline">
+								<li class="list-inline-item">
+									<a th:href="@{'/u/' + ${recipe.userName}}" class="card-meta-author">
+										<img th:src="@{${recipe.userImage}}" th:alt="${recipe.userName}">
+										<span th:text="${recipe.userName}">User Name</span>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<i class="ti-timer"></i>
+									<span th:text="${recipe.prepTime + recipe.cookTime} + ' mins total'"></span>
+								</li>
+								<li class="list-inline-item">
+									<i class="ti-calendar"></i>
+									<span th:text="${#temporals.format(recipe.createdAt, 'dd MMM yyyy')}">Date</span>
+								</li>
+								<li class="list-inline-item">
+									<span th:text="'Servings: ' + ${recipe.servings}"></span>
+								</li>
+								<li class="list-inline-item">
+									<span th:text="'Difficulty: ' + ${recipe.difficulty}"></span>
+								</li>
+								<li class="list-inline-item">
+									<ul class="card-meta-tag list-inline">
+										<li class="list-inline-item">
+											<a th:href="@{'/categories/' + ${recipe.categoryId}}"
+												th:text="${recipe.categoryName}">Category</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+							<p th:text="${#strings.abbreviate(recipe.description, 200)}">Recipe Description...</p>
+							<a th:href="@{'/recipes/' + ${recipe.id}}" class="btn btn-outline-primary">Read More</a>
+						</div>
+					</article>
+				</th:block>
+				
+				<th:block th:if="${#lists.isEmpty(recipes)}">
+				    <th:block th:replace="~{/fragments/not-found :: not-found}"></th:block>
+				</th:block>
+
+
+				
+				
+				<th:block th:replace="~{/layouts/pagination :: pagination}"></th:block>
+			</div>
+
+			<!-- Sidebar -->
+			<aside class="col-lg-4 sidebar-inner mt-0 order-2 order-lg-1">
+
+				<!-- Search Form -->
+				<div class="widget">
+					<h4 class="widget-title"><span>Search</span></h4>
+					<form th:action="@{/recipes/search}" method="get" class="widget-search">
+						<input class="mb-3" th:value="${search == null ? '' : search}" name="s" type="search" placeholder="Type & Hit Enter...">
+						<button type="submit" class="btn btn-primary btn-block">Search</button>
+					</form>
+				</div>
+
+				<!-- Categories -->
+				<div class="widget widget-categories">
+					<h4 class="widget-title"><span>Categories</span></h4>
+					<ul class="list-unstyled widget-list">
+						<li th:each="cat : ${categories}">
+							<a th:href="@{/recipes/search(categoryId=${cat.id})}" class="d-flex">
+								<span th:text="${cat.name}">Category</span>
+								<small class="ml-auto" th:text="'(' + ${cat.recipeCount} + ')'"></small>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<!-- Optional: Tags or promotions -->
+				<th:block th:replace="~{/fragments/promotion :: promotion}"></th:block>
+				<th:block th:replace="~{/fragments/social-links :: social_links}"></th:block>
+
+			</aside>
+		</div>
+	</div>
+</section>
+
+<th:block th:replace="~{/layouts/footer :: footer}"></th:block>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="navbar">
+		<!-- navigation -->
+		<header class="navigation fixed-top">
+			<div class="container">
+				<nav class="navbar navbar-expand-lg navbar-white">
+					<a class="navbar-brand order-1" href="/">
+						<img class="img-fluid" width="100px" th:src="@{/images/logo.png}" alt="Recipe book">
+					</a>
+					<div class="collapse navbar-collapse text-center order-lg-2 order-3" id="navigation">
+						<ul class="navbar-nav mx-auto">
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/}">Home</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/recipes}">Recipes</a>
+							</li>
+
+
+							<li class="nav-item dropdown">
+								<a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="false">Tools <i class="ti-angle-down ml-1"></i>
+								</a>
+								<div class="dropdown-menu">
+
+									<a class="dropdown-item" th:href="@{/recipes/create}">Create Recipe</a>
+
+								</div>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/about}">About</a>
+							</li>
+
+							<li class="nav-item">
+								<a class="nav-link" th:href="@{/contact}">Contact</a>
+							</li>
+
+
+
+						</ul>
+					</div>
+
+					<div class="order-2 order-lg-3 d-flex align-items-center">
+
+
+						<!-- search -->
+						<form class="search-bar" th:action="@{/recipes/search}">
+							<input id="search-query" th:value="${search == null ? '' : search}" name="s" type="search" placeholder="Type &amp; Hit Enter...">
+						</form>
+
+						<ul class="navbar-nav mx-auto">
+							<li class="nav-item" th:if="${!isAuthenticated}">
+								<a class="nav-link" th:href="@{/login}">Login</a>
+							</li>
+							<li class="nav-item" th:if="${isAuthenticated}">
+								<a class="nav-link navbar-image py-0" th:href="@{/settings/profile}">
+									<div class="image-box">
+										<img th:if="${authUser != null}" th:src="@{ ${authUser.image}}" />
+										<span th:if="${authUser == null}">Guest</span>
+									</div>
+								</a>
+							</li>
+						</ul>
+
+						<button class="navbar-toggler border-0 order-1" type="button" data-toggle="collapse"
+							data-target="#navigation">
+							<i class="ti-menu"></i>
+						</button>
+					</div>
+
+				</nav>
+			</div>
+		</header>
+		<!-- /navigation -->
+	</th:block>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/settings/partials/header :: header}"></th:block>
+
+<div class="content">
+	<th:block th:replace="~{/fragments/alert :: alert}"></th:block>
+
+	<th:block th:replace="~{/settings/account/change-username :: change_username}"></th:block>
+
+	<th:block th:replace="~{/settings/account/delete-account :: delete_account}"></th:block>
+</div>
+
+
+<script th:src="@{/js/pages/account.js}"></script>
+<th:block th:replace="~{/settings/partials/footer :: footer}"></th:block>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en-us" xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/settings/partials/header :: header}"></th:block>
+
+<div class="content analysis mb-4">
+	<h3>Analysis</h3>
+	<hr class="mt-0 mb-3">
+
+	<div class="row g-4">
+		<!-- Chart 1 -->
+		<div class="col-12 col-lg-6">
+			<div class="card shadow-sm border-0 h-100">
+				<div class="card-header d-flex align-items-center">
+					<b>Like vs Dislikes</b>
+					<select id="chartFilter" class="form-select ms-auto">
+						<option value="weekly">This week</option>
+						<option value="monthly">This month</option>
+						<option value="yearly">This year</option>
+					</select>
+				</div>
+				<div class="card-body d-flex align-items-center justify-content-center">
+					<div id="like_dislike_chart" style="height: 250px;"></div>
+				</div>
+			</div>
+		</div>
+
+		<script id="chart-data" type="application/json">
+		{
+		  "weekly": [ [[${weeklyLike ?: 0}]], [[${weeklyDislike ?: 0}]] ],
+		  "monthly": [ [[${monthlyLike ?: 0}]], [[${monthlyDislike ?: 0}]] ],
+		  "yearly": [ [[${yearlyLike ?: 0}]], [[${yearlyDislike ?: 0}]] ]
+		}
+		</script>
+
+
+
+		<!-- Chart 2 -->
+		<div class="col-12 col-lg-6">
+			<div class="card shadow-sm border-0 h-100">
+
+				<div class="card-header">
+					<b>Public Report</b>
+					<select id="publicReportChartFilter" class="form-select ms-auto">
+						<option value="weekly">This week</option>
+						<option value="monthly">This month</option>
+						<option value="yearly">This year</option>
+					</select>
+
+				</div>
+				<div class="card-body">
+					<div id="publicRadialChart" style="height: 300px;"></div>
+				</div>
+			</div>
+		</div>
+		<script id="public-report-chart-data" type="application/json">
+				{
+				  "weekly": [ [[${weeklyFollowing ?: 0}]], [[${weeklyFollowers ?: 0}]], [[${weeklyComments ?: 0}]] ],
+				  "monthly": [ [[${monthlyFollowing ?: 0}]], [[${monthlyFollowers ?: 0}]], [[${monthlyComments ?: 0}]] ],
+				  "yearly": [ [[${yearlyFollowing ?: 0}]], [[${yearlyFollowers ?: 0}]], [[${yearlyComments ?: 0}]]]
+				}
+		</script>
+
+		<!-- Chart 3 -->
+		<!--/*
+		<div class="col-12">
+			<div class="card shadow-sm border-0 mt-4">
+				<div class="card-header">
+					Chart 3
+				</div>
+				<div class="card-body">
+					<div id="chart3" style="height: 350px;"></div>
+				</div>
+			</div>
+		</div>
+		*/-->
+	</div>
+
+	<!--/*
+	<script>
+
+		var options = {
+			series: [{
+				name: 'series1',
+				data: [31, 40, 28, 51, 42, 109, 100]
+			}, {
+				name: 'series2',
+				data: [11, 32, 45, 32, 34, 52, 41]
+			}],
+			chart: {
+				height: 350,
+				type: 'area'
+			},
+			dataLabels: {
+				enabled: false
+			},
+			stroke: {
+				curve: 'smooth'
+			},
+			xaxis: {
+				type: 'datetime',
+				categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+			},
+			tooltip: {
+				x: {
+					format: 'dd/MM/yy HH:mm'
+				},
+			},
+		};
+
+		var chart = new ApexCharts(document.querySelector("#chart3"), options);
+		chart.render();
+
+	</script>
+	*/-->
+
+</div>
+
+
+<script th:src="@{/js/pages/analysis.js}"> </script>
+<th:block th:replace="~{/settings/partials/footer :: footer}"></th:block>

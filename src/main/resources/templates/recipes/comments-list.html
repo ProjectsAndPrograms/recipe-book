@@ -1,0 +1,9 @@
+<th:block th:each="comment : ${comments}">
+
+	<th:block th:replace="~{/recipes/partials/comment :: comment(${comment})}"></th:block>
+
+</th:block>
+
+<div th:if="${#lists.isEmpty(comments)}">
+	<p class="text-muted">No comments available.</p>
+</div>

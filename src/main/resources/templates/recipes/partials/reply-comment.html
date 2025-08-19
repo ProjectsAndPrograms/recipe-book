@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+	<th:block th:fragment="reply_comment(reply)">
+		<div class="media comment-box d-block d-sm-flex mb-1" th:data-comment-id="${reply.id}">
+			<a class="d-inline-block mr-2 mb-3 mb-md-0" th:href="${reply.user.image}" target="_blank">
+				<img th:src="${reply.user.image}" style="width: 40px; height: 40px;" class="mr-3 rounded-circle" alt="">
+			</a>
+			<div class="media-body">
+				<div class="d-flex align-items-end">
+					<a th:href="@{'\\u\\' + ${reply.user.username}}" class="h6 d-inline-block mb-1"
+						th:text="${reply.user.name}">Reply User</a>
+
+						<small class="text-muted ml-2 mb-1 font-weight-600"
+						       th:text="${(authUser?.role == 'admin') 
+						                    ? #temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm:ss') 
+						                    : reply.createdTimeAgo}">
+						</small>
+				</div>
+				<p th:text="${reply.message}">Reply content</p>
+			</div>
+		</div>
+	</th:block>
+</body>
+
+</html>
